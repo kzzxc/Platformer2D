@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using Unity.Mathematics;
 using UnityEngine;
 using Random = UnityEngine.Random;
+
 
 namespace Coins
 {
@@ -21,11 +21,13 @@ namespace Coins
 
         private IEnumerator InstantiateCoin()
         {
+            var delay = new WaitForSeconds(_spawnDelay);
+            
             for (int i = 0; i < _coinsCount; i++)
             {
                 int randomPointIndex = Random.Range(0, _spawnPoints.Length);
                 Instantiate(_prefab, _spawnPoints[randomPointIndex].transform.position, quaternion.identity);
-                yield return new WaitForSeconds(_spawnDelay);
+                yield return delay;
             }
         }
     }

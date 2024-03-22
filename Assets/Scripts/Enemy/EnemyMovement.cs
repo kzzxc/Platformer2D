@@ -1,32 +1,56 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
+
 namespace Enemy
 {
+    [RequireComponent(typeof(Rigidbody2D), typeof(SpriteRenderer))]
     public class EnemyMovement : MonoBehaviour
     {
-        [SerializeField] private float _moveSpeed;
-        
-        private Rigidbody2D _enemyRb;
+        [SerializeField] private float _patrolRadius = 5f;
+        [SerializeField] private float _moveSpeed = 3f;
+
+        private Rigidbody2D _rigidbody;
+        private SpriteRenderer _spriteRenderer;
+        private bool _movingRight = true;
+        private Vector2 _patrolCenter;
 
         private void Start()
         {
-            _enemyRb = GetComponent<Rigidbody2D>();
+            _rigidbody = GetComponent<Rigidbody2D>();
+            _spriteRenderer = GetComponent<SpriteRenderer>();
+            _patrolCenter = transform.position;
         }
 
         private void Update()
         {
-            _enemyRb.velocity = new Vector2(_moveSpeed, 0f);
+            Patrol();
         }
 
-        private void OnTriggerExit2D(Collider2D other)
+        private void Patrol()
         {
-            _moveSpeed = -_moveSpeed;
-            FlipEnemyFacing();
+            float movement = (_movingRight) ? _moveSpeed : -_moveSpeed;
+            _rigidbody.velocity = new Vector2(movement, _rigidbody.velocity.y);
+
+            if (IsAtPatrolEdge())
+            {
+                HandlePatrolEdge();
+            }
         }
 
-        private void FlipEnemyFacing()
+        private bool IsAtPatrolEdge()
         {
-            transform.localScale = new Vector2(-(Mathf.Sign(_enemyRb.velocity.x)), 1f);
+            return (_movingRight && transform.position.x >= _patrolCenter.x + _patrolRadius) ||
+                   (!_movingRight && transform.position.x <= _patrolCenter.x - _patrolRadius);
+        }
+
+        private void HandlePatrolEdge()
+        {
+            _movingRight = !_movingRight;
+            UpdateSpriteDirection();
+        }
+
+        private void UpdateSpriteDirection()
+        {
+            _spriteRenderer.flipX = !_movingRight;
         }
     }
 }

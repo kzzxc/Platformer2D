@@ -15,14 +15,12 @@ namespace Player
         private Vector2 _moveInput;
         private Rigidbody2D _rigidbody;
         private Animator _animator;
-        private CapsuleCollider2D _bodyCollider;
         private BoxCollider2D _feetCollider;
 
         private void Start()
         {
             _animator = GetComponent<Animator>();
             _rigidbody = GetComponent<Rigidbody2D>();
-            _bodyCollider = GetComponent<CapsuleCollider2D>();
             _feetCollider = GetComponent<BoxCollider2D>();
         }
 
