@@ -44,13 +44,13 @@ namespace Enemy
 
         private void HandlePatrolEdge()
         {
-            _movingRight = !_movingRight;
             UpdateSpriteDirection();
+            _movingRight = !_movingRight;
         }
 
         private void UpdateSpriteDirection()
         {
-            _spriteRenderer.flipX = !_movingRight;
+            _spriteRenderer.flipX = _movingRight;
         }
     }
 }
