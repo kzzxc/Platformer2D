@@ -9,17 +9,17 @@ namespace Coins
     public class CoinSpawner : MonoBehaviour
     {
         [SerializeField] private Transform[] _spawnPoints;
-        [SerializeField] private GameObject _prefab;
+        [SerializeField] private Coin _prefab;
         [SerializeField] private int _coinsCount;
 
         private int _spawnDelay = 3;
 
         private void Start()
         {
-            StartCoroutine(InstantiateCoin());
+            StartCoroutine(SpawnCoins());
         }
 
-        private IEnumerator InstantiateCoin()
+        private IEnumerator SpawnCoins()
         {
             var delay = new WaitForSeconds(_spawnDelay);
             
