@@ -6,7 +6,7 @@ using Random = UnityEngine.Random;
 
 namespace Coins
 {
-    public class CoinSpawner : MonoBehaviour
+    public class CoinsSpawner : MonoBehaviour
     {
         [SerializeField] private Transform[] _spawnPoints;
         [SerializeField] private Coin _prefab;
