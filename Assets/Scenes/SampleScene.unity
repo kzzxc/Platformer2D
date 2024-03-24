@@ -558,7 +558,7 @@ MonoBehaviour:
   - {fileID: 265617522}
   - {fileID: 1705650013}
   - {fileID: 1248169954}
-  _prefab: {fileID: 1382088756344187917, guid: 830efe98d3594af43940008b96bca066, type: 3}
+  _prefab: {fileID: 4858117700520131008, guid: 830efe98d3594af43940008b96bca066, type: 3}
   _coinsCount: 10
 --- !u!1 &424929103
 GameObject:
