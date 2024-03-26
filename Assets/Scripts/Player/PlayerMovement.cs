@@ -3,7 +3,7 @@ using UnityEngine.InputSystem;
 
 namespace Player
 {
-    [RequireComponent(typeof(Rigidbody2D))]
+    [RequireComponent(typeof(Rigidbody2D), typeof(Animator), typeof(BoxCollider2D))]
     public class PlayerMovement : MonoBehaviour
     {
         private static readonly int IsRunning = Animator.StringToHash("isRunning");

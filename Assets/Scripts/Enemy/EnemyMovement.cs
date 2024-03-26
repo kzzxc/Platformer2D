@@ -7,11 +7,15 @@ namespace Enemy
     {
         [SerializeField] private float _patrolRadius = 5f;
         [SerializeField] private float _moveSpeed = 3f;
+        
+        [SerializeField] private Transform _target;
+        [SerializeField] private float _detectionDistance = 2f;
 
         private Rigidbody2D _rigidbody;
         private SpriteRenderer _spriteRenderer;
         private bool _movingRight = true;
         private Vector2 _patrolCenter;
+        private bool _isFollow;
 
         private void Start()
         {
@@ -22,7 +26,14 @@ namespace Enemy
 
         private void Update()
         {
-            Patrol();
+            if (_isFollow == false)
+            {
+                Patrol();
+            }
+            else
+            {
+                Chase();
+            }
         }
 
         private void Patrol()
@@ -34,6 +45,9 @@ namespace Enemy
             {
                 HandlePatrolEdge();
             }
+
+            UpdateSpriteDirection();
+            TrackTarget();
         }
 
         private bool IsAtPatrolEdge()
@@ -44,13 +58,35 @@ namespace Enemy
 
         private void HandlePatrolEdge()
         {
-            UpdateSpriteDirection();
             _movingRight = !_movingRight;
         }
 
         private void UpdateSpriteDirection()
         {
-            _spriteRenderer.flipX = _movingRight;
+            if (_isFollow)
+            {
+                bool isTargetToTheRight = transform.position.x < _target.position.x;
+
+                _spriteRenderer.flipX = !isTargetToTheRight;
+            }
+            else
+            {
+                _spriteRenderer.flipX = !_movingRight;
+            }
+        }
+
+        private void Chase()
+        {
+            transform.position = Vector2.MoveTowards(transform.position, _target.position, (_moveSpeed + 1f) * Time.deltaTime);
+            UpdateSpriteDirection();
+            TrackTarget();
+        }
+
+        private void TrackTarget()
+        {
+            float distanceToTarget = Vector2.Distance(transform.position, _target.position);
+            
+            _isFollow = distanceToTarget < _detectionDistance;
         }
     }
 }
