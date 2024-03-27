@@ -12,14 +12,17 @@ public class Health : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
-        Debug.Log( gameObject.name + " Получил урон: " + damage);
-        _currentHealth -= damage;
-
-        _currentHealth = Mathf.Clamp(_currentHealth, 0f, _maxHealth);
-
-        if (_currentHealth <= 0f)
+        if (damage > 0)
         {
-            Die();
+            Debug.Log( gameObject.name + " Получил урон: " + damage);
+            _currentHealth -= damage;
+
+            _currentHealth = Mathf.Clamp(_currentHealth, 0f, _maxHealth);
+
+            if (_currentHealth <= 0f)
+            {
+                Die();
+            }
         }
     }
 

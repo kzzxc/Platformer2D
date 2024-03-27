@@ -6,7 +6,10 @@ namespace Coins
     {
         private void OnTriggerEnter2D(Collider2D col)
         {
-            Destroy(gameObject);
+            if (col.TryGetComponent(out Player.Player player))
+            {
+                Destroy(gameObject);
+            }
         }
     }
 }
