@@ -2,6 +2,7 @@
 
 namespace Enemy
 {
+    [RequireComponent(typeof(Rigidbody2D))]
     public class Patrol : MonoBehaviour
     {
         [SerializeField] private float _patrolRadius = 5f;
