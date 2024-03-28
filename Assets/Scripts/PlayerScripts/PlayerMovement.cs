@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
-using UnityEngine.InputSystem;
 
-namespace Player
+namespace PlayerScripts
 {
     [RequireComponent(typeof(Rigidbody2D), typeof(Animator), typeof(BoxCollider2D))]
     public class PlayerMovement : MonoBehaviour
@@ -24,15 +23,21 @@ namespace Player
             _feetCollider = GetComponent<BoxCollider2D>();
         }
 
-        private void Update()
+        private void FixedUpdate()
         {
             Run();
             FlipSprite();
         }
 
-        private void OnMove(InputValue value)
+        public void SetMoveInput(Vector2 moveInput)
         {
-            _moveInput = value.Get<Vector2>();
+            _moveInput = moveInput;
+        }
+
+        public void Jump(bool isPressed)
+        {
+            if (_feetCollider.IsTouchingLayers(LayerMask.GetMask(Ground)) && isPressed)
+                _rigidbody.velocity += new Vector2(0f, _jumpSpeed);
         }
 
         private void Run()
@@ -47,13 +52,6 @@ namespace Player
         {
             if (PlayerHasHorizontalSpeed())
                 transform.localScale = new Vector2(Mathf.Sign(_rigidbody.velocity.x), 1f);
-        }
-
-        private void OnJump(InputValue value)
-        {
-            if (_feetCollider.IsTouchingLayers(LayerMask.GetMask(Ground)))
-                if (value.isPressed)
-                    _rigidbody.velocity += new Vector2(0f, _jumpSpeed);
         }
 
         private bool PlayerHasHorizontalSpeed() =>

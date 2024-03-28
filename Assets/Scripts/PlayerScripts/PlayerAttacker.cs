@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 
-namespace Player
+namespace PlayerScripts
 {
-    public class PlayerAttack : MonoBehaviour
+    public class PlayerAttacker : MonoBehaviour
     {
         [SerializeField] private Bullet _bulletPrefab;
         [SerializeField] private Transform _firePoint;
