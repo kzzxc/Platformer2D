@@ -15,9 +15,11 @@ namespace PlayerScripts
         private Rigidbody2D _rigidbody;
         private Animator _animator;
         private BoxCollider2D _feetCollider;
+        private SpriteRenderer _spriteRenderer;
 
         private void Start()
         {
+            _spriteRenderer = GetComponent<SpriteRenderer>();
             _animator = GetComponent<Animator>();
             _rigidbody = GetComponent<Rigidbody2D>();
             _feetCollider = GetComponent<BoxCollider2D>();

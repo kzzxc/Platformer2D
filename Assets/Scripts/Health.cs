@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class Health : MonoBehaviour
@@ -5,7 +6,12 @@ public class Health : MonoBehaviour
     [SerializeField] private float _maxHealth = 100f;
     [SerializeField] private float _currentHealth;
 
-    private void Start()
+    public event Action<float> HealthChanged;
+
+    public float CurrentHealth => _currentHealth;
+    public float MaxHealth => _maxHealth;
+
+    private void Awake()
     {
         _currentHealth = _maxHealth;
     }
@@ -14,10 +20,11 @@ public class Health : MonoBehaviour
     {
         if (damage > 0)
         {
-            Debug.Log( gameObject.name + " Получил урон: " + damage);
-            _currentHealth -= damage;
+            Debug.Log(gameObject.name + " Получил урон: " + damage);
 
-            _currentHealth = Mathf.Clamp(_currentHealth, 0f, _maxHealth);
+            _currentHealth = Mathf.Clamp(_currentHealth - damage, 0f, _maxHealth);
+
+            HealthChanged?.Invoke(_currentHealth);
 
             if (_currentHealth <= 0f)
             {
@@ -31,8 +38,10 @@ public class Health : MonoBehaviour
         if (heal > 0)
         {
             Debug.Log(gameObject.name + " Восстановил здоровье:  " + heal);
-            _currentHealth += heal;
-            _currentHealth = Mathf.Clamp(_currentHealth, 0f, _maxHealth);
+
+            _currentHealth = Mathf.Clamp(_currentHealth + heal, 0f, _maxHealth);
+
+            HealthChanged?.Invoke(_currentHealth);
         }
     }
 
