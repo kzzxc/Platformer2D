@@ -7,10 +7,12 @@ namespace PlayerScripts
     public class PlayerInputHandler : MonoBehaviour
     {
         private PlayerMovement _playerMovement;
+        private PlayerSkill _playerAbility;
 
         private void Start()
         {
             _playerMovement = GetComponent<PlayerMovement>();
+            _playerAbility = GetComponent<PlayerSkill>();
         }
 
         private void OnMove(InputValue value)
@@ -21,6 +23,18 @@ namespace PlayerScripts
         private void OnJump(InputValue value)
         {
             _playerMovement.Jump(value.isPressed);
+        }
+
+        private void OnAbility(InputValue value)
+        {
+            if (_playerAbility.AbilityAvailable)
+            {
+                _playerAbility.ActivateAbility();
+            }
+            else
+            {
+                Debug.Log("COOLDOWN");
+            }
         }
     }
 }
